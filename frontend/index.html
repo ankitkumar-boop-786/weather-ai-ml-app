@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="main">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1 id="cityName">City: --</h1>
+            <p id="status">Enter data or city</p>
+        </div>
+
+        <!-- CARDS -->
+        <div class="grid">
+
+            <div class="card">
+                <div class="icon">🌡️</div>
+                <div class="info">
+                    <p>Real Temp</p>
+                    <span id="realTemp"></span>°C
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">🤖</div>
+                <div class="info">
+                    <p>Predicted Temp</p>
+                    <span id="predTemp"></span>°C
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">⚠️</div>
+                <div class="info">
+                    <p>Prediction Error</p>
+                    <span id="error"></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">🎯</div>
+                <div class="info">
+                    <p>AI Confidence</p>
+                    <span id="confidence"></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">💧</div>
+                <div class="info">
+                    <p>Humidity</p>
+                    <span id="humidityValue"></span>%
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">🌪️</div>
+                <div class="info">
+                    <p>Wind Speed</p>
+                    <span id="wind"></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">☁️</div>
+                <div class="info">
+                    <p>Clouds</p>
+                    <span id="clouds"></span>%
+                </div>
+            </div>
+        </div>
+
+        <!-- CHART -->
+        <div class="chart">
+            <canvas id="weatherChart"></canvas>
+        </div>
+
+        <!-- INPUT BAR -->
+        <div class="bottom">
+
+            <input type="text" id="city" placeholder="Enter city">
+            <input type="number" id="humidity" placeholder="Humidity">
+            <input type="number" id="pressure" placeholder="Pressure">
+
+            <button onclick="getWeather()">Get Weather</button>
+            <button onclick="predictLive()">Live</button>
+            <button onclick="predict()">Predict</button>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
