@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pandas as pd
 import pickle
 import requests
 import re
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
@@ -28,7 +31,14 @@ def predict():
      wind_speed = data.get('wind_speed', 0)
      clouds = data.get('clouds', 0)
      
-     prediction = model.predict([[humidity, pressure, wind_speed, clouds]])
+     input_data = pd.DataFrame([{
+       "humidity": humidity,
+       "pressure": pressure,
+       "wind_speed": wind_speed,
+       "clouds": clouds
+      }])
+
+     prediction = model.predict(input_data)
      return jsonify({'temperature': prediction[0]})
     except Exception as e:
         return jsonify({
@@ -44,13 +54,12 @@ def get_weather():
 
     response = requests.get(url)
 
-    if response.status_code != 200:
-     return jsonify({"error": "Weather API failed"})
-    
     data = response.json()
 
-    if "main" not in data:
-      return jsonify({"error": "Invalid city name"})
+    if str(data.get("cod")) != "200":
+      return jsonify({
+        "error": data.get("message", "Weather API failed")
+    })
 
     return jsonify({
 
@@ -72,20 +81,26 @@ def predict_live():
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
     response = requests.get(url)
 
-    if response.status_code != 200:
-     return jsonify({"error": "Weather API failed"})
-    
     data = response.json()
 
-    if "main" not in data:
-     return jsonify({"error": "Invalid city name"})
-
+    if str(data.get("cod")) != "200":
+      return jsonify({
+        "error": data.get("message", "Weather API failed")
+    })
+    
     humidity = data["main"]["humidity"]
     pressure = data["main"]["pressure"]
     wind_speed = data["wind"]["speed"]
     clouds = data["clouds"]["all"]
 
-    prediction = model.predict([[humidity, pressure, wind_speed, clouds]])
+    input_data = pd.DataFrame([{
+        "humidity": humidity,
+        "pressure": pressure,
+        "wind_speed": wind_speed,
+        "clouds": clouds
+     }])
+
+    prediction = model.predict(input_data)
     error = abs(data["main"]["temp"] - prediction[0])
     confidence = max(0, 100 - (error * 5))
    
