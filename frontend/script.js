@@ -60,7 +60,7 @@ async function getWeather() {
 
     document.getElementById("status").innerText = "Loading...";
     try {
-        let response = await fetch(`${BASE_URL} / weather ? city = ${city}`);
+        let response = await fetch(`${BASE_URL}/weather?city=${city}`);
         let data = await response.json();
         if (data.error) {
             document.getElementById("status").innerText = data.error;
