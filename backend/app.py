@@ -16,7 +16,7 @@ CORS(app)
 
 
 
-model_path = os.path.join(os.path.dirname(__file__), "../model/model.pkl")
+model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "model/model.pkl"))
 model = pickle.load(open(model_path, "rb"))
 @app.route('/')
 def home():
