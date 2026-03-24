@@ -87,7 +87,7 @@ def predict_live():
       return jsonify({
         "error": data.get("message", "Weather API failed")
     })
-    
+
     humidity = data["main"]["humidity"]
     pressure = data["main"]["pressure"]
     wind_speed = data["wind"]["speed"]
@@ -117,7 +117,7 @@ def predict_live():
     
 })
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+
+port = int(os.environ.get("PORT", 5000))
+app.run(host="0.0.0.0", port=port)
   
