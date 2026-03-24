@@ -3,12 +3,15 @@ from flask_cors import CORS
 import pickle
 import requests
 import re
+import os
+
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 app = Flask(__name__)
 
 CORS(app)
 
-API_KEY = "ffeddcd58f523e3dcee996c62b2a918a"
+
 model = pickle.load(open('model/model.pkl', 'rb'))
 @app.route('/')
 def home():
