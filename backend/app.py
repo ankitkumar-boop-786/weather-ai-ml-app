@@ -15,7 +15,9 @@ app = Flask(__name__)
 CORS(app)
 
 
-model = pickle.load(open('model/model.pkl', 'rb'))
+
+model_path = os.path.join(os.path.dirname(__file__), "../model/model.pkl")
+model = pickle.load(open(model_path, "rb"))
 @app.route('/')
 def home():
     return "API is running 🚀"
