@@ -1,4 +1,8 @@
+
+const BASE_URL = "https://weather-ai-ml-app-9.onrender.com";
+
 let chart;
+
 let historyLabels = [];
 let historyData = [];
 async function predict() {
@@ -14,7 +18,7 @@ async function predict() {
 
     try {
 
-        let response = await fetch("http://127.0.0.1:5000/predict", {
+        let response = await fetch(`${BASE_URL}/predict`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -56,7 +60,7 @@ async function getWeather() {
 
     document.getElementById("status").innerText = "Loading...";
     try {
-        let response = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
+        let response = await fetch(`${BASE_URL} / weather ? city = ${city}`);
         let data = await response.json();
         if (data.error) {
             document.getElementById("status").innerText = data.error;
@@ -64,7 +68,7 @@ async function getWeather() {
         }
 
         document.getElementById("status").innerText =
-            `Temp: ${data.temperature}°C | Humidity: ${data.humidity}% | Pressure: ${data.pressure}`;
+            `Temp: ${data.temperature}°C | Humidity: ${data.humidity} % | Pressure: ${data.pressure}`;
     } catch (error) {
         document.getElementById("status").innerText = "⚠️ Server error or connection issue";
     }
@@ -81,7 +85,7 @@ async function predictLive() {
 
     document.getElementById("status").innerText = "Loading...";
     try {
-        let response = await fetch(`http://127.0.0.1:5000/predict-live?city=${city}`);
+        let response = await fetch(`${BASE_URL}/predict-live?city=${city}`);
         let data = await response.json();
         if (data.error) {
             document.getElementById("status").innerText = data.error;
